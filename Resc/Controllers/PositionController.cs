@@ -25,7 +25,11 @@ namespace Resc.Controllers
                 position.Lat = data.Lat;
                 position.Lng = data.Lng;
 
-                db.ActivePositions.Add(position);
+                if (position.Id != 0)
+                    db.ActivePositions.Update(position);
+                else
+                    db.ActivePositions.Add(position);
+
                 db.SaveChanges();
             }
         }

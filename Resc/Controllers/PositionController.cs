@@ -26,6 +26,7 @@ namespace Resc.Controllers
                 position.Lng = data.Lng;
 
                 db.ActivePositions.Add(position);
+                db.SaveChanges();
             }
         }
 

@@ -29,7 +29,8 @@ namespace Resc.Controllers
 
                 firstResponder.PushEndpoint = data.Endpoint;
                 var tmp = data.Keys.FirstOrDefault();
-                firstResponder.PushAuth = tmp.Key;
+                firstResponder.PushAuth = tmp.Value;
+                tmp = data.Keys.Skip(1).FirstOrDefault();
                 firstResponder.PushKey = tmp.Value;
 
                 db.FirstResponders.Update(firstResponder);

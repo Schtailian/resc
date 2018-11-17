@@ -46,7 +46,7 @@ namespace Resc
                 .AllowAnyMethod()
                 .AllowAnyOrigin());
 
-            //app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
             app.UseMvc();
         }
     }

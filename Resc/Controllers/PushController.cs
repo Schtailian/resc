@@ -49,8 +49,8 @@ namespace Resc.Controllers
             var auth = responder.PushAuth;
 
             var subject = @"mailto:example@example.com";
-            var publicKey = @"BMCcFxjNcJBuoF4yr2cTsuByCUVevPUwdQVDGiqIuIQOqZdUfH3l0MgxhqZru6l8Yr-Mhmpm2PxSW0lEVBgJizo";
-            var privateKey = @"PV9lmBhzghb2Ntc89FPOBX7fa27kY7ndMPEBe4TXWnk";
+            var publicKey = @"BOYIC7mz-ejuM6Nq4AFlZn3lYfA4NpxHI62RwubkdOEcY1qysVLGvtWXXKdoZYg6mMVujYYNfvMvGr7P8ChtII4";
+            var privateKey = @"hgg0q6HVAtKwb1AKeYJlIkyQbqRfxujp6hULhflh6f8";
 
             var subscription = new PushSubscription(pushEndpoint, p256dh, auth);
             var vapidDetails = new VapidDetails(subject, publicKey, privateKey);

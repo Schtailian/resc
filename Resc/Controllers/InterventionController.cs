@@ -48,7 +48,8 @@ namespace Resc.Controllers
 
             using (var db = new RescContext())
             {
-                foreach (var intervention in db.Interventions.Where(i => i.State == IntervationState.Open))
+                var intervention = db.Interventions.Where(i => i.State == IntervationState.Open).LastOrDefault();
+                if (intervention != null)
                 {
                     InterventionHelper.Notify(intervention);
                 }

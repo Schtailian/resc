@@ -28,9 +28,9 @@ namespace Resc.Controllers
                     return Ok("Fail");
 
                 firstResponder.PushEndpoint = data.Endpoint;
-                var tmp = data.Keys.FirstOrDefault();
+                var tmp = data.Keys.SingleOrDefault(k => k.Key == "auth");
                 firstResponder.PushAuth = tmp.Value;
-                tmp = data.Keys.Skip(1).FirstOrDefault();
+                tmp = data.Keys.SingleOrDefault(k => k.Key == "p256dh");
                 firstResponder.PushKey = tmp.Value;
 
                 db.FirstResponders.Update(firstResponder);

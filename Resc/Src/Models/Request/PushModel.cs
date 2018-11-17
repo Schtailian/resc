@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace Resc.Src.Models.Request
 {
-    public class PositionModel
+    public class PushModel
     {
-        public double Lat { get; set; }
-        public double Lng { get; set; }
         public int Id { get; set; }
+        public string Endpoint { get; set; }
+        public Dictionary<string,string> Keys { get; set; }
     }
 }

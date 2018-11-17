@@ -7,6 +7,10 @@ namespace Resc.Src
     public class RescContext : DbContext
     {
         public DbSet<ActivePosition> ActivePositions { get; set; }
+        public DbSet<Intervention> Interventions { get; set; }
+        public DbSet<FirstResponder> FirstResponders { get; set; }
+        public DbSet<FirstResponderIntervention> FirstResponderInterventions { get; set; }
+        public DbSet<Station> Stations { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -18,15 +22,15 @@ namespace Resc.Src
             public int Id { get; set; }
             public int FirstResponderId { get; set; }
             public FirstResponder FirstResponder { get; set; }
-            public decimal Lat { get; set; }
-            public decimal Lng { get; set; }
+            public double Lat { get; set; }
+            public double Lng { get; set; }
         }
 
         public class Intervention
         {
             public int Id { get; set; }
-            public decimal Lat { get; set; }
-            public decimal Lng { get; set; }
+            public double Lat { get; set; }
+            public double Lng { get; set; }
             public string Overview { get; set; }
             public string Detail { get; set; }
             public IntervationState State { get; set; }
@@ -37,6 +41,9 @@ namespace Resc.Src
             public int Id { get; set; }
             public string Name { get; set; }
             public string Description { get; set; }
+            public string PushEndpoint { get; set; }
+            public string PushAuth { get; set; }
+            public string PushKey { get; set; }
         }
 
         public class FirstResponderIntervention
@@ -47,6 +54,14 @@ namespace Resc.Src
             public int InterventionId { get; set; }
             public Intervention Intervention { get; set; }
             public FirstResponderIntervationState State { get; set; }
+        }
+
+        public class Station
+        {
+            public int Id { get; set; }
+            public int Name { get; set; }
+            public double Lat { get; set; }
+            public double Lng { get; set; }
         }
     }
 }

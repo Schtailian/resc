@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Resc.Src;
+using Resc.Src.Helper;
 using Resc.Src.Models.Request;
 using static Resc.Src.RescContext;
 
@@ -16,6 +17,8 @@ namespace Resc.Controllers
         [HttpPost]
         public void Post(PositionModel data)
         {
+            UserMocker.Mock(data.Id);
+
             using (var db = new RescContext())
             {
                 var position = db.ActivePositions.SingleOrDefault(p => p.FirstResponderId == data.Id);
@@ -32,12 +35,6 @@ namespace Resc.Controllers
 
                 db.SaveChanges();
             }
-        }
-
-        [HttpGet]
-        public ActionResult Get(string a)
-        {
-            return Ok(a);
         }
     }
 }

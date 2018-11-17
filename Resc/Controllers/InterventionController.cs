@@ -14,23 +14,50 @@ namespace Resc.Controllers
     [ApiController]
     public class InterventionController : ControllerBase
     {
-        // GET api/values
-        [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
         // GET api/values/5
         [HttpGet("{id}")]
         public ActionResult<string> Get(int id)
         {
-            return "value";
+            using (var db = new RescContext())
+            {
+                var intervention = db.Interventions.FirstOrDefault(i => i.Id == id);
+                return Ok(intervention);
+            }
         }
 
-        // POST api/values
+        // GET api/values/5
+        [HttpGet("Accept/{id}")]
+        public ActionResult<string> Accept(int id)
+        {
+            using (var db = new RescContext())
+            {
+                var responderInterventions = db.FirstResponderInterventions.Where(i => i.FirstResponderId == id);
+                foreach(var tmp in responderInterventions)
+                {
+                    tmp.State = FirstResponderIntervationState.Accepted;
+                }
+                db.SaveChanges();
+            }
+            return Ok();
+        }
+
+        [HttpGet("Deny/{id}")]
+        public ActionResult<string> Deny(int id)
+        {
+            using (var db = new RescContext())
+            {
+                var responderInterventions = db.FirstResponderInterventions.Where(i => i.FirstResponderId == id);
+                foreach (var tmp in responderInterventions)
+                {
+                    tmp.State = FirstResponderIntervationState.Denied;
+                }
+                db.SaveChanges();
+            }
+            return Ok();
+        }
+
         [HttpPost]
-        public void Post(InterventionModel data)
+        public ActionResult Post(InterventionModel data)
         {
             using (var db = new RescContext())
             {
@@ -51,25 +78,14 @@ namespace Resc.Controllers
                 var intervention = db.Interventions.Where(i => i.State == IntervationState.Open).LastOrDefault();
                 if (intervention != null)
                 {
-                    InterventionHelper.Notify(intervention);
+                    InterventionExtension.Notify(intervention);
                 }
             }
-        }
-
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            return Ok();
         }
     }
 
-    public class InterventionHelper
+    public class InterventionExtension
     {
         public static void Notify(Intervention intervention)
         {
@@ -80,6 +96,20 @@ namespace Resc.Controllers
             foreach(var responder in responders)
             {
                 contr.SendNotification(responder, intervention);
+            }
+
+            using (var db = new RescContext())
+            {
+                foreach (var responder in responders)
+                {
+                    db.FirstResponderInterventions.Add(new FirstResponderIntervention
+                    {
+                        State = FirstResponderIntervationState.None,
+                        FirstResponderId = responder.Id,
+                        InterventionId = intervention.Id
+                    });
+                }
+                db.SaveChanges();
             }
         }
 

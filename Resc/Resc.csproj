@@ -5,6 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Src\Models\Response - Kopieren\**" />
+    <Content Remove="Src\Models\Response - Kopieren\**" />
+    <EmbeddedResource Remove="Src\Models\Response - Kopieren\**" />
+    <None Remove="Src\Models\Response - Kopieren\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="wwwroot\" />
   </ItemGroup>
 

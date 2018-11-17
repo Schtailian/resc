@@ -15,7 +15,7 @@ namespace Resc.Controllers
     public class PositionController : ControllerBase
     {
         [HttpPost]
-        public void Post(PositionModel data)
+        public ActionResult Post(PositionModel data)
         {
             UserMocker.Mock(data.Id);
 
@@ -35,6 +35,8 @@ namespace Resc.Controllers
 
                 db.SaveChanges();
             }
+
+            return Ok();
         }
     }
 }

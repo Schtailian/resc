@@ -17,7 +17,7 @@ namespace Resc.Controllers
     public class PushController : ControllerBase
     {
         [HttpPost]
-        public void Post(PushModel data)
+        public ActionResult Post(PushModel data)
         {
             UserMocker.Mock(data.Id);
 
@@ -25,7 +25,7 @@ namespace Resc.Controllers
             {
                 var firstResponder = db.FirstResponders.SingleOrDefault(p => p.Id == data.Id);
                 if (firstResponder == null)
-                    return;
+                    return Ok("Fail");
 
                 firstResponder.PushEndpoint = data.Endpoint;
                 var tmp = data.Keys.FirstOrDefault();
@@ -37,6 +37,8 @@ namespace Resc.Controllers
 
                 db.SaveChanges();
             }
+
+            return Ok();
         }
     }
 

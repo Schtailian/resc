@@ -38,7 +38,7 @@ namespace Resc
             }
             else
             {
-                app.UseHsts();
+                //app.UseHsts();
             }
 
             app.UseCors(builder =>
@@ -46,7 +46,7 @@ namespace Resc
                 .AllowAnyMethod()
                 .AllowAnyOrigin());
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseMvc();
         }
     }

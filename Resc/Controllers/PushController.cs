@@ -60,7 +60,7 @@ namespace Resc.Controllers
             var webPushClient = new WebPushClient();
             try
             {
-                webPushClient.SendNotification(subscription, "payload", vapidDetails);
+                webPushClient.SendNotification(subscription, "{\"id\": " + intervention.Id + "}", vapidDetails);
             }
             catch (WebPushException exception)
             {
